@@ -16,7 +16,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import WelcomePage from "./components/WelcomePage";  
 import SignupPage from "./components/SignupPage";  // Import SignupPage
 import SignIn from "./components/SignInPage";
-
 function App() {
   return (
     <Router>
