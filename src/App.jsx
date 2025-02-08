@@ -1,28 +1,31 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import './App.css'
+// import React from "react";
+// import WelcomePage from "./components/WelcomePage"  // Adjust the path if necessary
 
 // function App() {
 //   return (
-//     <>
-//       <div className='text-blue-700'>
-//        App
-//       </div>
-//     </>
-//   )
+//     <div className="App">
+//       <WelcomePage />  {/* Render the WelcomePage component */}
+//     </div>
+//   );
 // }
 
-// export default App
+// export default App;
 
 import React from "react";
-import WelcomePage from "./components/WelcomePage"  // Adjust the path if necessary
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import WelcomePage from "./components/WelcomePage";  
+import SignupPage from "./components/SignupPage";  // Import SignupPage
+import SignIn from "./components/SignInPage";
 
 function App() {
   return (
-    <div className="App">
-      <WelcomePage />  {/* Render the WelcomePage component */}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<WelcomePage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/signin" element={<SignIn />} />
+      </Routes>
+    </Router>
   );
 }
 
