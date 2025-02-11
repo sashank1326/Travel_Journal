@@ -82,6 +82,7 @@
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import image from '../../public/images/logo.jpg';
 
 const SignupPage = () => {
   const [password, setPassword] = useState("");
@@ -132,10 +133,11 @@ const SignupPage = () => {
       {/* App Name in Top Left */}
        <div className="absolute top-4 left-4">
          <Link to="/" 
-           className="text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-green-700 to-red-400  hover:scale-105 transition-all duration-300"
-         >Travel Journal</Link>
+           className="text-3xl font-extrabold flex gap-4 items-center"
+         > <img src={image} alt="Logo" className="w-18 h-18 object-contain mb rounded-md"
+         />Travel Journal</Link>
        </div>
-      <div className="bg-white-0 p-8 rounded-lg shadow-lg w-96">
+      <div className="backdrop-blur-3xl p-8 rounded-xl shadow-black shadow-2xl w-96 ">
         <h2 className="text-3xl font-bold text-center mb-6">Sign Up</h2>
 
         <form onSubmit={handleSubmit}>
