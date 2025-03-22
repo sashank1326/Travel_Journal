@@ -183,7 +183,6 @@
 // export default SignupPage;
 
 
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import image from "../../public/images/logo.jpg";
@@ -248,14 +247,17 @@ const SignupPage = () => {
   return (
     <div className="h-screen w-full flex flex-col items-center justify-center bg-cover bg-center backdrop-blur-lg"
       style={{ backgroundImage: "url('../../public/images/bg2.jpg')" }}>
+      
+      {/* 🔹 Fixed Logo Size & Position */}
       <div className="absolute top-4 left-4">
-        <Link to="/" className="text-3xl font-extrabold flex gap-4 items-center">
-          <img src={image} alt="Logo" className="w-18 h-18 object-contain mb rounded-md" />
+        <Link to="/" className="text-4xl font-extrabold flex gap-4 items-center">
+          <img src={image} alt="Logo" className="w-16 h-16 object-contain rounded-md" />
           Travel Journal
         </Link>
       </div>
+
       <div className="backdrop-blur-3xl p-8 rounded-xl shadow-black shadow-2xl w-96 ">
-        <h2 className="text-3xl font-bold text-center mb-6">Sign Up</h2>
+        <h2 className="text-4xl font-bold text-center mb-6">Sign Up</h2>
 
         <form onSubmit={handleSubmit}>
           <input type="text" name="name" placeholder="Name" className="w-full p-2 mb-4 border rounded" value={formData.name} onChange={handleChange} required />

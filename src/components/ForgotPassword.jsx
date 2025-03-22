@@ -60,7 +60,7 @@ const ForgotPassword = () => {
       {/* Logo */}
       <div className="absolute top-4 left-4">
         <Link to="/" className="text-3xl font-extrabold flex gap-4 items-center">
-          <img src="/images/logo.jpg" alt="Logo" className="w-16 h-16 object-contain rounded-md" />
+          <img src="/images/logo.jpg" alt="Logo" className="w-18 h-18 object-contain rounded-md" />
           Travel Journal
         </Link>
       </div>
