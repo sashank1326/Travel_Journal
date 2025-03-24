@@ -63,18 +63,18 @@
 //     document.documentElement.classList.toggle("dark", newMode);
 //   };
 
-//   // Handle Logout
-//   const handleLogout = () => {
-//     localStorage.removeItem("token"); // Remove token from local storage
-//     sessionStorage.clear(); // Clear session storage
-//     setMenuOpen(false); // Close menu
-//     navigate("/"); // Redirect to Welcome Page
-//   };
+  // // Handle Logout
+  // const handleLogout = () => {
+  //   localStorage.removeItem("token"); // Remove token from local storage
+  //   sessionStorage.clear(); // Clear session storage
+  //   setMenuOpen(false); // Close menu
+  //   navigate("/"); // Redirect to Welcome Page
+  // };
 
-//   // Toggle Profile Details
-//   const toggleProfile = () => {
-//     setShowProfile(!showProfile);
-//   };
+  // // Toggle Profile Details
+  // const toggleProfile = () => {
+  //   setShowProfile(!showProfile);
+  // };
 
 //   return (
 //     <div
