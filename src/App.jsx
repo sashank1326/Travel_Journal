@@ -29,7 +29,8 @@ import SignIn from "./components/SignInPage";
 import Dashboard from "./components/dashboard";  
 import ForgotPassword from "./components/ForgotPassword";
 import CreateBlog from "./components/CreateBlog";
-
+import MyBlogs from "./components/MyBlogs"; // Import MyBlogs
+import BlogDetails from "./components/BlogDetails"; // <-- Import BlogDetails
 
 
 
@@ -43,7 +44,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/create-blog" element={<CreateBlog />} />
-
+        <Route path="/my-blogs" element={<MyBlogs />} /> 
+        <Route path="/blog/:id" element={<BlogDetails />} /> {/* used to view the detailed version of the blog */}
       </Routes>
     </Router>
   );

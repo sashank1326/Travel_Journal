@@ -10,8 +10,6 @@
 
 // // export default CreateBlog;
 
-
-
 // import { useState, useEffect, useRef } from "react";
 // import { useNavigate } from "react-router-dom";
 // import { Menu, Sun, Moon } from "lucide-react";
@@ -368,7 +366,7 @@ const CreateBlog = () => {
 
   return (
     <div
-      className={`h-screen w-full p-6 transition-colors duration-300 ${
+      className={`min-h-screen h-full w-full p-6 transition-colors duration-300 ${
         darkMode ? "bg-gray-900 text-white" : "bg-gradient-to-br from-green-100 to-green-300 text-gray-900"
       }`}
     >
@@ -459,7 +457,7 @@ const CreateBlog = () => {
         <h2 className="text-2xl font-bold mb-4">Create Your Blog</h2>
 
         
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3 mb-18">
           
           <input type="text" placeholder="Title *" required value={title} onChange={(e) => setTitle(e.target.value)}
             className={`p-3 border rounded-md w-full ${darkMode ? "bg-gray-700 text-white" : "bg-green-200 text-gray-900"}`}
@@ -477,8 +475,8 @@ const CreateBlog = () => {
             className={`p-3 border rounded-md w-full ${darkMode ? "bg-gray-700 text-white" : "bg-green-200 text-gray-900"}`}
           />
 
-          <textarea placeholder="Content *" required value={content} rows='4' onChange={(e) => setContent(e.target.value)}
-            className={`p-3 border rounded-md w-full ${darkMode ? "bg-gray-700 text-white" : "bg-green-200 text-gray-900"}`}
+          <textarea placeholder="Content *" required value={content} rows='6' onChange={(e) => setContent(e.target.value)}
+            className={`p-3  border rounded-md w-full ${darkMode ? "bg-gray-700 text-white" : "bg-green-200 text-gray-900"}`}
           />
 
           <input type="number" placeholder="Rating (1-5)" min="1" max="5" value={rating} onChange={(e) => setRating(e.target.value)}
@@ -525,7 +523,7 @@ const CreateBlog = () => {
           </div>
           {/* submit button */}
           <button type="submit"
-            className="w-full bg-green-500 text-white py-2 px-4 rounded-md flex justify-center items-center"
+            className="w-full bg-green-500 mt-8 text-white py-2 px-4 rounded-md flex justify-center items-center"
             disabled={isSubmitting}
           >
             {isSubmitting ? (
