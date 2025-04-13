@@ -1,4 +1,3 @@
-
 // import fs from "fs";
 // import path from "path";
 // import heicConvert from "heic-convert";
@@ -96,6 +95,28 @@
 //     }
 // };
 
+// // 📌 Function to get a single blog by ID
+// export const getBlogById = async (req, res) => {
+//     try {
+//         const { id } = req.params;
+
+//         // Fetch blog from the database
+//         const blog = await Blog.findById(id);
+
+//         if (!blog) {
+//             return res.status(404).json({ message: "Blog not found" });
+//         }
+
+//         console.log("📜 Blog details:", blog); // Log the blog data
+
+//         res.status(200).json({ blog });
+//     } catch (error) {
+//         console.error("❌ Error fetching blog:", error);
+//         res.status(500).json({ message: "Internal server error" });
+//     }
+// };
+
+
 
 import fs from "fs";
 import path from "path";
@@ -179,7 +200,6 @@ export const getUserBlogs = async (req, res) => {
     try {
         const userId = req.user.id;
 
-        // Fetch all blogs where the author matches the logged-in user
         const blogs = await Blog.find({ author: userId }).sort({ updatedAt: -1 });
 
         if (blogs.length === 0) {
@@ -199,15 +219,13 @@ export const getBlogById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        // Fetch blog from the database
         const blog = await Blog.findById(id);
 
         if (!blog) {
             return res.status(404).json({ message: "Blog not found" });
         }
 
-        console.log("📜 Blog details:", blog); // Log the blog data
-
+        console.log("📜 Blog details:", blog);
         res.status(200).json({ blog });
     } catch (error) {
         console.error("❌ Error fetching blog:", error);
@@ -215,3 +233,16 @@ export const getBlogById = async (req, res) => {
     }
 };
 
+// 📌 Function to get all blogs from all users
+export const getAllBlogs = async (req, res) => {
+    try {
+        const blogs = await Blog.find()
+            .sort({ createdAt: -1 })
+            .populate("author", "username bio");
+
+        res.status(200).json(blogs);
+    } catch (error) {
+        console.error("❌ Error fetching all blogs:", error);
+        res.status(500).json({ message: "Server error while fetching all blogs" });
+    }
+};

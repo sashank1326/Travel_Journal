@@ -31,6 +31,8 @@ import ForgotPassword from "./components/ForgotPassword";
 import CreateBlog from "./components/CreateBlog";
 import MyBlogs from "./components/MyBlogs"; // Import MyBlogs
 import BlogDetails from "./components/BlogDetails"; // <-- Import BlogDetails
+import ViewBlog from "./components/ViewBlog"; // Import View Blogs
+import ViewDetails from "./components/ViewDetails";
 
 
 
@@ -46,6 +48,8 @@ function App() {
         <Route path="/create-blog" element={<CreateBlog />} />
         <Route path="/my-blogs" element={<MyBlogs />} /> 
         <Route path="/blog/:id" element={<BlogDetails />} /> {/* used to view the detailed version of the blog */}
+        <Route path="/view-blog" element={<ViewBlog />} />
+        <Route path="/view/:id" element={<ViewDetails />} /> 
       </Routes>
     </Router>
   );
