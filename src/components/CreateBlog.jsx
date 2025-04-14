@@ -305,7 +305,6 @@
 
 
 
-
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu, Sun, Moon, MapPin, Calendar, Tag, Star, Upload, X, FileText, ArrowRight } from "lucide-react";
@@ -369,24 +368,6 @@ export default function CreateBlog() {
       previewUrls.forEach(url => URL.revokeObjectURL(url));
     };
   }, [darkMode, files]);
-
-  const toggleDarkMode = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-    localStorage.setItem("darkMode", newMode);
-    document.documentElement.classList.toggle("dark", newMode);
-  };
-
-  const toggleProfile = () => {
-    setShowProfile(!showProfile);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    sessionStorage.clear();
-    setMenuOpen(false);
-    navigate("/");
-  };
 
   const removeFile = (index) => {
     setFiles(files.filter((_, i) => i !== index));
@@ -505,15 +486,14 @@ export default function CreateBlog() {
         }`}
     >
       <Navbar
-        pages={"Create Blog"}
-        darkMode={darkMode}
-        toggleDarkMode={toggleDarkMode}
-        handleLogout={handleLogout}
-        userName={userName}
-        bio={bio}
-        phoneNumber={phoneNumber}
-        email={email}
-      />
+              darkMode={darkMode}
+              setDarkMode={setDarkMode}
+              userName={userName}
+              bio={bio}
+              phoneNumber={phoneNumber}
+              email={email}
+              pages={"Create Blog"}
+            />
 
       <div className="mx-auto pt-5 pb-16 px-4">
         <motion.div

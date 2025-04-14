@@ -123,6 +123,7 @@ import path from "path";
 import heicConvert from "heic-convert";
 import { fileURLToPath } from "url";
 import Blog from "../models/blog.js";
+import User from "../models/user.js"; 
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -219,13 +220,13 @@ export const getBlogById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const blog = await Blog.findById(id);
+        const blog = await Blog.findById(id).populate("author", "name email");;
 
         if (!blog) {
             return res.status(404).json({ message: "Blog not found" });
         }
 
-        console.log("📜 Blog details:", blog);
+        // console.log("📜 Blog details:", blog); to get the fetched details
         res.status(200).json({ blog });
     } catch (error) {
         console.error("❌ Error fetching blog:", error);
@@ -238,11 +239,12 @@ export const getAllBlogs = async (req, res) => {
     try {
         const blogs = await Blog.find()
             .sort({ createdAt: -1 })
-            .populate("author", "username bio");
-
+            .populate("author", "name email");
+        // console.log(blogs);  // Add this to log the fetched blogs
         res.status(200).json(blogs);
     } catch (error) {
         console.error("❌ Error fetching all blogs:", error);
         res.status(500).json({ message: "Server error while fetching all blogs" });
     }
 };
+

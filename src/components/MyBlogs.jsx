@@ -209,8 +209,6 @@
 
 
 
-
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserDetails } from "../api/authService";
@@ -228,7 +226,7 @@ export default function MyBlogs() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -244,12 +242,12 @@ export default function MyBlogs() {
         if (!userData) {
           throw new Error("User data not available");
         }
-        
+
         setUserName(userData.name);
         setBio(userData.bio || "Traveler & Explorer");
         setPhoneNumber(userData.phone || "Not Provided");
         setEmail(userData.email || "Not Provided");
-        const userId = userData._id; 
+        const userId = userData._id;
         if (!userId) {
           throw new Error("User ID not available");
         }
@@ -270,22 +268,9 @@ export default function MyBlogs() {
   }, [navigate]);
 
 
-  const toggleDarkMode = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-    localStorage.setItem("darkMode", newMode);
-    document.documentElement.classList.toggle("dark", newMode);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    sessionStorage.clear();
-    navigate("/");
-  };
-
   const filteredBlogs = blogs
-    .filter(blog => 
-      blog.title?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    .filter(blog =>
+      blog.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       blog.location?.toLowerCase().includes(searchQuery.toLowerCase())
     )
     .sort((a, b) => {
@@ -303,32 +288,31 @@ export default function MyBlogs() {
   };
 
   return (
-    <div className={`min-h-screen pt-3 w-full flex flex-col transition-colors duration-300 ${
-      darkMode 
-        ? "bg-gray-900 text-gray-100" 
-        : "bg-gradient-to-b from-emerald-50 to-emerald-100 text-gray-800"
-    }`}>
+    <div className={`min-h-screen pt-3 w-full flex flex-col transition-colors duration-300 ${darkMode
+      ? "bg-gray-900 text-gray-100"
+      : "bg-gradient-to-t from-emerald-700 to-emerald-50 text-gray-800"
+      }`}>
+
+
       <Navbar
-        pages="My Blogs"
         darkMode={darkMode}
-        toggleDarkMode={toggleDarkMode}
-        handleLogout={handleLogout}
+        setDarkMode={setDarkMode}
         userName={userName}
         bio={bio}
         phoneNumber={phoneNumber}
         email={email}
+        pages={"My Blogs"}
       />
 
 
-      <div className={`w-full mt-4 px-6 pt-10 pb-6 ${
-        darkMode 
-          ? "bg-gradient-to-r from-gray-800 to-gray-900" 
+      <div className={`w-full mt-4 px-6 pt-10 pb-6 ${darkMode
+          ? "bg-gradient-to-r from-gray-800 to-gray-900"
           : "bg-gradient-to-r from-emerald-600 to-teal-700"
-      }`}>
+        }`}>
         <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">My Travel Journal</h1>
           <p className="text-lg text-gray-200 mb-6">Relive your adventures and plan new journeys</p>
-          
+
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="relative flex-grow">
               <input
@@ -336,35 +320,32 @@ export default function MyBlogs() {
                 placeholder="Search by title or location..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={`w-full p-3 pl-4 rounded-lg focus:outline-none focus:ring-2 ${
-                  darkMode 
-                    ? "bg-gray-700 text-white focus:ring-teal-400 placeholder-gray-400" 
+                className={`w-full p-3 pl-4 rounded-lg focus:outline-none focus:ring-2 ${darkMode
+                    ? "bg-gray-700 text-white focus:ring-teal-400 placeholder-gray-400"
                     : "bg-white text-gray-800 focus:ring-emerald-500"
-                }`}
+                  }`}
               />
             </div>
-            
+
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              className={`px-2 rounded-xl  focus:ring-2 ${
-                darkMode 
-                  ? "bg-gray-700 text-white focus:ring-teal-400" 
+              className={`px-2 rounded-xl  focus:ring-2 ${darkMode
+                  ? "bg-gray-700 text-white focus:ring-teal-400"
                   : "bg-white text-gray-800 focus:ring-emerald-500"
-              }`}
+                }`}
             >
               <option value="all">All Entries</option>
               <option value="recent">Most Recent</option>
               <option value="oldest">Oldest First</option>
             </select>
-            
-            <button 
+
+            <button
               onClick={() => navigate("/create-blog")}
-              className={`flex items-center justify-center gap-2 p-3 rounded-lg text-white font-medium transition-all ${
-                darkMode 
-                  ? "bg-teal-600 hover:bg-teal-700" 
+              className={`flex items-center justify-center gap-2 p-3 rounded-lg text-white font-medium transition-all ${darkMode
+                  ? "bg-teal-600 hover:bg-teal-700"
                   : "bg-emerald-600 hover:bg-emerald-700"
-              }`}
+                }`}
             >
               <PlusCircle size={20} />
               <span>New Entry</span>
@@ -377,31 +358,28 @@ export default function MyBlogs() {
       <div className="flex-1 w-full max-w-6xl mx-auto px-6 py-8">
         {loading && (
           <div className="flex flex-col items-center justify-center py-20">
-            <div className={`w-16 h-16 border-4 rounded-full animate-spin ${
-              darkMode ? "border-teal-400 border-t-transparent" : "border-emerald-600 border-t-transparent"
-            }`}></div>
+            <div className={`w-16 h-16 border-4 rounded-full animate-spin ${darkMode ? "border-teal-400 border-t-transparent" : "border-emerald-600 border-t-transparent"
+              }`}></div>
             <p className="mt-4 text-lg">Loading your travel memories...</p>
           </div>
         )}
 
         {!loading && filteredBlogs.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <div className={`p-6 rounded-full mb-4 ${
-              darkMode ? "bg-gray-800" : "bg-emerald-200"
-            }`}>
+            <div className={`p-6 rounded-full mb-4 ${darkMode ? "bg-gray-800" : "bg-emerald-200"
+              }`}>
               <PenSquare size={48} className={darkMode ? "text-teal-400" : "text-emerald-700"} />
             </div>
             <h2 className="text-2xl font-bold mb-2">No Travel Memories Yet</h2>
             <p className="text-lg mb-6 max-w-md">
-              {searchQuery 
-                ? "No entries match your search. Try different keywords." 
+              {searchQuery
+                ? "No entries match your search. Try different keywords."
                 : "Start documenting your adventures by creating your first travel entry."}
             </p>
-            <button 
+            <button
               onClick={() => navigate("/create-blog")}
-              className={`flex items-center gap-2 px-6 py-3 rounded-lg text-white font-medium transition-all ${
-                darkMode ? "bg-teal-600 hover:bg-teal-700" : "bg-emerald-600 hover:bg-emerald-700"
-              }`}
+              className={`flex items-center gap-2 px-6 py-3 rounded-lg text-white font-medium transition-all ${darkMode ? "bg-teal-600 hover:bg-teal-700" : "bg-emerald-600 hover:bg-emerald-700"
+                }`}
             >
               <PlusCircle size={20} />
               <span>Create First Entry</span>
@@ -415,15 +393,13 @@ export default function MyBlogs() {
               <div
                 key={blog._id}
                 onClick={() => navigate(`/blog/${blog._id}`)}
-                className={`group relative overflow-hidden rounded-xl shadow-lg cursor-pointer transition-all duration-300 hover:-translate-y-2 ${
-                  darkMode ? "bg-gray-800 hover:shadow-teal-900/30" : "bg-white hover:shadow-emerald-900/20"
-                }`}
+                className={`group relative overflow-hidden rounded-xl shadow-lg cursor-pointer transition-all duration-300 hover:-translate-y-2 ${darkMode ? "bg-gray-800 hover:shadow-teal-900/30" : "bg-white hover:shadow-emerald-900/20"
+                  }`}
               >
                 <div className="h-14 bg-gradient-to-r bg-gray-500"></div>
                 <div className="p-6 pt-8 relative">
-                  <div className={`absolute -top-6 left-6 px-4 py-2 rounded-lg shadow ${
-                    darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-800"
-                  }`}>
+                  <div className={`absolute -top-6 left-6 px-4 py-2 rounded-lg shadow ${darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-800"
+                    }`}>
                     <time className="text-md font-medium">
                       {new Date(blog.dateOfTravel).toLocaleDateString('en-US', {
                         month: 'short',
@@ -432,30 +408,28 @@ export default function MyBlogs() {
                       })}
                     </time>
                   </div>
-                  
+
                   <h2 className="text-xl font-bold mb-2 line-clamp-2">
                     {truncateText(blog.title, 60)}
                   </h2>
-                  
+
                   {blog.location && (
                     <div className="flex items-center mb-3 text-sm">
                       <MapPin size={16} className={darkMode ? "text-teal-400" : "text-emerald-600"} />
                       <span className="ml-1 text-gray-400">{blog.location}</span>
                     </div>
                   )}
-                  
+
                   {blog.description && (
-                    <p className={`mb-4 line-clamp-3 text-sm ${
-                      darkMode ? "text-gray-400" : "text-gray-600"
-                    }`}>
+                    <p className={`mb-4 line-clamp-3 text-sm ${darkMode ? "text-gray-400" : "text-gray-600"
+                      }`}>
                       {truncateText(blog.description, 150)}
                     </p>
                   )}
-                  
+
                   <div className="flex justify-end">
-                    <span className={`inline-flex items-center text-sm font-medium ${
-                      darkMode ? "text-teal-400" : "text-emerald-600"
-                    } group-hover:underline`}>
+                    <span className={`inline-flex items-center text-sm font-medium ${darkMode ? "text-teal-400" : "text-emerald-600"
+                      } group-hover:underline`}>
                       Read more
                       <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -467,7 +441,7 @@ export default function MyBlogs() {
             ))}
           </div>
         )}
-        
+
         {!loading && filteredBlogs.length > 0 && (
           <div className="mt-8 text-center">
             <p className={darkMode ? "text-gray-400" : "text-gray-600"}>

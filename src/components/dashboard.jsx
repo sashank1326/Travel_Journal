@@ -277,14 +277,13 @@ export default function Dashboard() {
         }`}
     >
       <Navbar
-        pages={"Home"}
         darkMode={darkMode}
-        toggleDarkMode={toggleDarkMode}
-        handleLogout={handleLogout}
+        setDarkMode={setDarkMode}
         userName={userName}
         bio={bio}
         phoneNumber={phoneNumber}
         email={email}
+        pages={"Home"}
       />
 
       <AnimatePresence>
@@ -528,7 +527,7 @@ export default function Dashboard() {
           className={`p-8 mt-12 rounded-xl view-shadow  ${darkMode ? "bg-gray-800 shadow-emerald-500" : "bg-white/90 shadow-black"
             }`}
         >
-          <h2 className={`text-3xl text-center font-bold mb-4 ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
+          <h2 className={`text - 3xl text-center font-bold mb-4 ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
             What are <span className=" text-emerald-500 "><span className="text-4xl">T</span>ravel <span className="text-4xl">J</span>ournals</span> ?
           </h2>
 
@@ -537,7 +536,7 @@ export default function Dashboard() {
               <p className="leading-relaxed p-5">
                 A <span className="text-lg text-emerald-500">Travel Journal</span> is a personal space where travelers can document their journeys, memories, and experiences from different places they've visited.
                 It typically includes details like destinations, dates, highlights of the trip, photos, and personal reflections.
-                
+
               </p>
             </div>
             <div className="shadow-gray-700 rounded-xl shadow-sm hover:shadow-lg duration-200">
@@ -571,6 +570,6 @@ export default function Dashboard() {
         </motion.div>
 
       </AnimatePresence>
-    </div>
+    </div >
   );
 };
