@@ -527,7 +527,7 @@ export default function Dashboard() {
           className={`p-8 mt-12 rounded-xl view-shadow  ${darkMode ? "bg-gray-800 shadow-emerald-500" : "bg-white/90 shadow-black"
             }`}
         >
-          <h2 className={`text - 3xl text-center font-bold mb-4 ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
+          <h2 className={`text-3xl font-extrabold text-center  mb-4 ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
             What are <span className=" text-emerald-500 "><span className="text-4xl">T</span>ravel <span className="text-4xl">J</span>ournals</span> ?
           </h2>
 

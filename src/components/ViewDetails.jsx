@@ -177,7 +177,10 @@ export default function BlogDetails() {
       } catch (error) {
         setError("Failed to load blog details. Please try again.");
       } finally {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 500)
+        
       }
     };
 
@@ -185,9 +188,9 @@ export default function BlogDetails() {
   }, [id]);
 
   if (loading) return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-      <p className="ml-3">Loading adventure...</p>
+    <div className="flex flex-col gap-8 items-center justify-center min-h-screen">
+      <div className="animate-spin rounded-full h-16 w-16  border-b-3 border-t-3 border-emerald-500"></div>
+      <p className="ml-3 text-xl">Loading adventure...</p>
     </div>
   );
   

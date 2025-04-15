@@ -235,7 +235,7 @@ const SignupPage = () => {
         phone: formData.phone,
         password: formData.password,
       });
-      alert("Sign Up Successful!");
+      // alert("Sign Up Successful!");
       navigate("/signin"); // Redirect to Sign In page
     } catch (err) {
       setError(err.response?.data?.message || "Signup failed");

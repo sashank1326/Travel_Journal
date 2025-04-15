@@ -127,14 +127,24 @@ const SignIn = () => {
     try {
       const res = await signin(formData);
       localStorage.setItem("token", res.data.token); // Store token
-      alert("Sign In Successful!");
+      // alert("Sign In Successful!");
       navigate("/dashboard"); // Redirect after login (change this route as needed)
     } catch (err) {
       setError(err.response?.data?.message || "Sign in failed");
     } finally {
-      setLoading(false);
+      setTimeout(()=> {
+        setLoading(false);
+      }, 1000)
+      
     }
   };
+
+  if (loading) return (
+    <div className={`flex flex-col gap-8 items-center justify-center min-h-screen`}>
+      <div className="animate-spin rounded-full h-16 w-16  border-b-3 border-t-3 border-emerald-500"></div>
+      <p className="ml-3 text-xl">Loading Travel <span className="text-emerald-500 ">Journey's</span></p>
+    </div>
+  );
  
   return (
     <div className="h-screen w-full flex flex-col items-center justify-center bg-cover bg-center backdrop-blur-lg"

@@ -344,11 +344,11 @@ export default function ViewBlogs() {
             </div>
           ) : (
             <>
-              <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8`}>
+              <div className={`grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-6 `}>
                 {filteredAndSortedBlogs.map((blog, index) => (
                   <div
                     key={blog._id}
-                    className={`overflow-hidden rounded-2xl shadow-lg transition-all duration-500 cursor-pointer hover:shadow-2xl transform hover:-translate-y-3 ${darkMode ? "bg-gray-800" : "bg-white"
+                    className={`overflow-hidden rounded-2xl shadow-lg shadow-gray-400 transition-all duration-500 cursor-pointer hover:shadow-2xl transform hover:-translate-y-3 ${darkMode ? "bg-gray-800" : "bg-white"
                       } `}
                     onClick={() => navigate(`/view/${blog._id}`)}
                   >
