@@ -19,8 +19,4 @@ export default mongoose.model("User", UserSchema);
 //     phone: { type: String, required: true },
 //     password: { type: String, required: true },
 //     bio: { type: String, default: "Traveler & Explorer" }, // New bio field
-//   },
-//   { timestamps: true }
-// );
-
 // export default mongoose.model("User", UserSchema);

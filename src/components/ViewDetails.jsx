@@ -1,362 +1,7 @@
-
-// import { useState, useEffect } from "react";
-// import { useParams } from "react-router-dom";
-// import axios from "axios";
-// import Navbar from "../components/Navbar";
-
-// const API_URL = "http://localhost:5000/api/blogs";
-// const WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/weather";
-// const WEATHER_API_KEY = "3acf46f3b2b85194cc6fe10182fe807a";
-
-// export default function BlogDetails() {
-//   const { id } = useParams();
-//   const [blog, setBlog] = useState(null);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-//   const [weather, setWeather] = useState(null);
-//   const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") === "true");
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await axios.get(`${API_URL}/${id}`);
-//         if (!response.data.blog) throw new Error("Blog not found!");
-        
-//         setBlog(response.data.blog);
-//         if (response.data.blog.location) {
-//           const weatherRes = await axios.get(WEATHER_API_URL, {
-//             params: { q: response.data.blog.location, appid: WEATHER_API_KEY, units: "metric" }
-//           });
-//           setWeather(weatherRes.data);
-//         }
-//       } catch (error) {
-//         setError("Failed to load blog details. Please try again.");
-//       } finally {
-//         setTimeout(() => {
-//           setLoading(false);
-//         }, 500)
-        
-//       }
-//     };
-
-//     fetchData();
-//   }, [id]);
-
-//   if (loading) return (
-//     <div className="flex flex-col gap-8 items-center justify-center min-h-screen">
-//       <div className="animate-spin rounded-full h-16 w-16  border-b-3 border-t-3 border-emerald-500"></div>
-//       <p className="ml-3 text-xl">Loading adventure...</p>
-//     </div>
-//   );
-  
-//   if (error || !blog) return (
-//     <div className="flex items-center justify-center min-h-screen p-4">
-//       <div className="text-center max-w-md bg-white rounded-lg shadow-md p-6">
-//         <div className="text-red-500 text-5xl mb-4">⚠️</div>
-//         <h2 className="text-2xl font-bold mb-2">{!blog ? "Blog not found" : "Error"}</h2>
-//         <p className="text-gray-600">{error || "The blog you're looking for doesn't exist or has been removed."}</p>
-//       </div>
-//     </div>
-//   );
-
-//   const toggleDarkMode = () => {
-//     setDarkMode(!darkMode);
-//     localStorage.setItem("darkMode", darkMode);
-//   };
-
-//   return (
-//     <div className={`min-h-screen pt-4 ${
-//       darkMode 
-//         ? "bg-gray-900 text-gray-100" 
-//         : "bg-gradient-to-b from-emerald-50 to-emerald-100 text-gray-800"
-//     }`}>
-      
-//       <div className="flex justify-between mb-4">
-//         <button onClick={() =>window.location.href="/view-blog"} className="px-4 mx-2 py-2 bg-emerald-600 text-white rounded-md">⬅ Back</button>
-//       </div>
-      
-//       <div className="max-w-4xl mx-auto px-4 py-6">
-//         <div className="relative rounded-xl overflow-hidden mb-6 shadow-lg">
-//           <div className="w-full h-30 bg-gradient-to-r from-blue-400 to-purple-500"></div>
-//           <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end">
-//             <div className="p-5 w-full">
-//               <h1 className="text-3xl font-bold text-white mb-1">{blog.title}</h1>
-//               <div className="flex items-center text-white">
-//                 <span className="mr-3">{new Date(blog.dateOfTravel).toDateString()}</span>
-//                 {blog.location && <span className="mr-3">📍 {blog.location}</span>}
-//               </div>
-//               {/* Author Info */}
-//               {/* Author Info */}
-//               {blog.author && (
-//                 <div className="text-sm text-gray-400">
-//                   <span>Written by: {blog.author.name}, Email: {blog.author.email}</span>
-//                 </div>
-//               )}
-
-//             </div>
-//           </div>
-//         </div>
-        
-//         <div className="flex flex-col md:flex-row gap-6">
-//           <div className="md:w-2/3">
-//             <div className={`p-5 rounded-lg shadow-md ${darkMode ? "bg-gray-800" : "bg-white"}`}>
-//               <p className="whitespace-pre-line">{blog.content}</p>
-              
-//               {blog.images && blog.images.length > 0 && (
-//                 <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-//                   {blog.images.slice(0, blog.images.length).map((image, index) => (
-//                     <img key={index} src={`http://localhost:5000/${image}`} alt={`Blog Image ${index + 1}`} className="rounded-lg shadow-sm shadow-black" />
-//                   ))}
-//                 </div>
-//               )}
-//             </div>
-//           </div>
-          
-//           <div className="md:w-1/3 space-y-4">
-//             {weather && (
-//               <div className={`p-4 rounded-lg shadow-md ${darkMode ? "bg-gray-800" : "bg-white"}`}>
-//                 <h3 className="text-lg font-semibold mb-2">Weather in {blog.location}</h3>
-//                 <div className="flex items-center">
-//                   <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-//                        alt={weather.weather[0].description} className="w-14 h-14 mr-2" />
-//                   <div>
-//                     <p className="text-xl font-bold">{Math.round(weather.main.temp)}°C</p>
-//                     <p className="capitalize">{weather.weather[0].description}</p>
-//                   </div>
-//                 </div>
-//                 <div className="mt-2 grid grid-cols-2 gap-1 text-sm">
-//                   <div>Humidity: {weather.main.humidity}%</div>
-//                   <div>Wind: {weather.wind.speed} m/s</div>
-//                 </div>
-//               </div>
-//             )}
-            
-//             {blog.rating && (
-//               <div className={`p-4 rounded-lg shadow-md ${darkMode ? "bg-gray-800" : "bg-white"}`}>
-//                 <h3 className="text-lg font-semibold mb-2">Rating</h3>
-//                 <div className="flex items-center">
-//                   <span className="text-xl font-bold mr-2">{blog.rating}</span>
-//                   <div className="flex">
-//                     {[...Array(5)].map((_, i) => (
-//                       <span key={i} className={`text-xl ${i < blog.rating ? "text-yellow-400" : "text-gray-300"}`}>★</span>
-//                     ))}
-//                   </div>
-//                 </div>
-//               </div>
-//             )}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-
-// Beggining stage
-
-// import { useState, useEffect } from "react";
-// import { useParams } from "react-router-dom";
-// import axios from "axios";
-// import Navbar from "../components/Navbar";
-
-// const API_URL = "http://localhost:5000/api/blogs";
-// const WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/weather";
-// const WEATHER_API_KEY = "3acf46f3b2b85194cc6fe10182fe807a";
-// const GEMINI_API_URL = "http://localhost:5000/api/gemini/analyze"; // Added Gemini API URL
-
-// export default function BlogDetails() {
-//   const { id } = useParams();
-//   const [blog, setBlog] = useState(null);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-//   const [weather, setWeather] = useState(null);
-//   const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") === "true");
-//   const [analysis, setAnalysis] = useState(null); // State for storing AI analysis result
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await axios.get(`${API_URL}/${id}`);
-//         console.log("Blog data:", response.data.blog);
-//         if (!response.data.blog) throw new Error("Blog not found!");
-  
-//         setBlog(response.data.blog);
-  
-//         // ✅ (NEW) AI Content Analysis - Only if blog has content
-//         if (response.data.blog.content) {
-//           console.log("Sending content for analysis:", response.data.blog.content); // log content
-  
-//           try {
-//             // ✅ (NEW) Send content to Gemini API backend for analysis
-//             const aiResponse = await axios.post("http://localhost:5000/api/gemini/analyze", {
-//               blogContent: response.data.blog.content,
-//             });
-  
-//             console.log("AI Analysis Result:", aiResponse.data);
-//             setAnalysis(aiResponse.data); // ✅ (NEW) Save analysis to state
-//           } catch (aiError) {
-//             console.error("AI Analysis Error:", aiError.response?.data || aiError.message);
-//           }
-  
-//         } else {
-//           console.log("No blog content found!"); // If content is missing
-//         }
-  
-//         // ✅ (UNCHANGED) Weather data based on location
-//         if (response.data.blog.location) {
-//           const weatherRes = await axios.get(WEATHER_API_URL, {
-//             params: { q: response.data.blog.location, appid: WEATHER_API_KEY, units: "metric" }
-//           });
-//           setWeather(weatherRes.data);
-//         }
-  
-//       } catch (error) {
-//         setError("Failed to load blog details. Please try again.");
-//         console.error("Error fetching data:", error); // Log error for debugging
-//       } finally {
-//         setTimeout(() => {
-//           setLoading(false);
-//         }, 500);
-//       }
-//     };
-  
-//     fetchData();
-//   }, [id]);
-
-//   if (loading) return (
-//     <div className="flex flex-col gap-8 items-center justify-center min-h-screen">
-//       <div className="animate-spin rounded-full h-16 w-16  border-b-3 border-t-3 border-emerald-500"></div>
-//       <p className="ml-3 text-xl">Loading adventure...</p>
-//     </div>
-//   );
-
-//   if (error || !blog) return (
-//     <div className="flex items-center justify-center min-h-screen p-4">
-//       <div className="text-center max-w-md bg-white rounded-lg shadow-md p-6">
-//         <div className="text-red-500 text-5xl mb-4">⚠️</div>
-//         <h2 className="text-2xl font-bold mb-2">{!blog ? "Blog not found" : "Error"}</h2>
-//         <p className="text-gray-600">{error || "The blog you're looking for doesn't exist or has been removed."}</p>
-//       </div>
-//     </div>
-//   );
-
-//   const toggleDarkMode = () => {
-//     setDarkMode(!darkMode);
-//     localStorage.setItem("darkMode", darkMode);
-//   };
-//   // console.log(analysis);
-//   // console.log("AI Analysis Result:", analysis);
-
-//   return (
-//     <div className={`min-h-screen pt-4 ${darkMode ? "bg-gray-900 text-gray-100" : "bg-gradient-to-b from-emerald-50 to-emerald-100 text-gray-800"}`}>
-//       <div className="flex justify-between mb-4">
-//         <button onClick={() => window.location.href = "/view-blog"} className="px-4 mx-2 py-2 bg-emerald-600 text-white rounded-md">⬅ Back</button>
-//       </div>
-
-//       <div className="max-w-4xl mx-auto px-4 py-6">
-//         <div className="relative rounded-xl overflow-hidden mb-6 shadow-lg">
-//           <div className="w-full h-30 bg-gradient-to-r from-blue-400 to-purple-500"></div>
-//           <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end">
-//             <div className="p-5 w-full">
-//               <h1 className="text-3xl font-bold text-white mb-1">{blog.title}</h1>
-//               <div className="flex items-center text-white">
-//                 <span className="mr-3">{new Date(blog.dateOfTravel).toDateString()}</span>
-//                 {blog.location && <span className="mr-3">📍 {blog.location}</span>}
-//               </div>
-//               {blog.author && (
-//                 <div className="text-sm text-gray-400">
-//                   <span>Written by: {blog.author.name}, Email: {blog.author.email}</span>
-//                 </div>
-//               )}
-//             </div>
-//           </div>
-//         </div>
-
-//         <div className="flex flex-col md:flex-row gap-6">
-//           <div className="md:w-2/3">
-//             <div className={`p-5 rounded-lg shadow-md ${darkMode ? "bg-gray-800" : "bg-white"}`}>
-//               <p className="whitespace-pre-line">{blog.content}</p>
-
-//               {blog.images && blog.images.length > 0 && (
-//                 <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-//                   {blog.images.slice(0, blog.images.length).map((image, index) => (
-//                     <img key={index} src={`http://localhost:5000/${image}`} alt={`Blog Image ${index + 1}`} className="rounded-lg shadow-sm shadow-black" />
-//                   ))}
-//                 </div>
-//               )}
-//             </div>
-//           </div>
-
-//           <div className="md:w-1/3 space-y-4">
-//             {weather && (
-//               <div className={`p-4 rounded-lg shadow-md ${darkMode ? "bg-gray-800" : "bg-white"}`}>
-//                 <h3 className="text-lg font-semibold mb-2">Weather in {blog.location}</h3>
-//                 <div className="flex items-center">
-//                   <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-//                        alt={weather.weather[0].description} className="w-14 h-14 mr-2" />
-//                   <div>
-//                     <p className="text-xl font-bold">{Math.round(weather.main.temp)}°C</p>
-//                     <p className="capitalize">{weather.weather[0].description}</p>
-//                   </div>
-//                 </div>
-//                 <div className="mt-2 grid grid-cols-2 gap-1 text-sm">
-//                   <div>Humidity: {weather.main.humidity}%</div>
-//                   <div>Wind: {weather.wind.speed} m/s</div>
-//                 </div>
-//               </div>
-//             )}
-
-//             {blog.rating && (
-//               <div className={`p-4 rounded-lg shadow-md ${darkMode ? "bg-gray-800" : "bg-white"}`}>
-//                 <h3 className="text-lg font-semibold mb-2">Rating</h3>
-//                 <div className="flex items-center">
-//                   <span className="text-xl font-bold mr-2">{blog.rating}</span>
-//                   <div className="flex">
-//                     {[...Array(5)].map((_, i) => (
-//                       <span key={i} className={`text-xl ${i < blog.rating ? "text-yellow-400" : "text-gray-300"}`}>★</span>
-//                     ))}
-//                   </div>
-//                 </div>
-//               </div>
-//             )}
-
-//             {/* AI Analysis Section - Added AI Content Analysis Result */}
-//             {analysis && analysis.Destination ? (
-//               <div className="mt-10 p-6 rounded-xl shadow-lg bg-green-100 dark:bg-emerald-900 text-gray-900 dark:text-white">
-//                 <h2 className="text-2xl font-bold mb-4">🌟 AI-Powered Travel Insights</h2>
-//                 <p><span className="font-semibold">Destination:</span> {analysis.Destination.City}, {analysis.Destination.State}, {analysis.Destination.Country}</p>
-//                 <p><span className="font-semibold">Travel Mode:</span> {analysis["Travel Mode"]}</p>
-//                 <p><span className="font-semibold">Season:</span> {analysis.Season}</p>
-//                 <p><span className="font-semibold">Travel Style:</span> {analysis["Travel Style"]}</p>
-
-//                 {analysis["Nearby Attractions"] && (
-//                   <div className="mt-3">
-//                     <p className="font-semibold">Nearby Attractions:</p>
-//                     <ul className="list-disc list-inside">
-//                       {analysis["Nearby Attractions"].map((place, index) => (
-//                         <li key={index}>{place}</li>
-//                       ))}
-//                     </ul>
-//                   </div>
-//                 )}
-//               </div>
-//             ) : (
-//               <div className="mt-10 p-6 rounded-xl shadow-lg bg-gray-900 text-gray-200 dark:text-white">
-//                 <p>Loading AI Analysis...</p>
-//               </div>
-//             )}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react"; // Add useRef here
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import io from "socket.io-client";
 
 const API_URL = "http://localhost:5000/api/blogs";
 const WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/weather";
@@ -372,6 +17,11 @@ export default function ViewDetails() {
   const [analysis, setAnalysis] = useState([]);
   const [activeTab, setActiveTab] = useState("overview");
   const [showFullInsights, setShowFullInsights] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
+  const [socket, setSocket] = useState(null);
+  const messagesEndRef = useRef(null);
+  const SOCKET_URL = "http://localhost:5000";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -413,6 +63,101 @@ export default function ViewDetails() {
 
     fetchData();
   }, [id]);
+
+  useEffect(() => {
+    const newSocket = io(SOCKET_URL);
+    setSocket(newSocket);
+
+    if (blog?.author?._id) {
+        newSocket.emit('join', {
+            userId: localStorage.getItem('userId'),
+            authorId: blog.author._id,
+            blogId: id
+        });
+    }
+
+    newSocket.on('receive_message', (message) => {
+        // Check if message is from blog author
+        const isFromAuthor = message.userId === blog.author._id || message.userId === blog._id;
+        
+        setMessages(prev => [...prev, {
+            text: message.text,
+            sender: isFromAuthor ? 'author' : 'user'
+        }]);
+    });
+
+    return () => {
+        newSocket.disconnect();
+    };
+  }, [blog?.author?._id, id]);
+
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+        if (blog?.author?._id && activeTab === "chat") {
+            try {
+                const response = await axios.get(`http://localhost:5000/api/chat/blog-messages/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                
+                const formattedMessages = response.data.map(msg => {
+                    // Check if sender matches either blog ID or author ID
+                    const isAuthor = msg.sender === blog._id || msg.sender === blog.author._id;
+                    
+                    console.log('Message details:', {
+                        msgSender: msg.sender,
+                        blogId: blog._id,
+                        authorId: blog.author._id,
+                        isAuthor: isAuthor
+                    });
+
+                    return {
+                        text: msg.content,
+                        sender: isAuthor ? 'author' : 'user'
+                    };
+                });
+                
+                setMessages(formattedMessages);
+            } catch (error) {
+                console.error('Error fetching messages:', error);
+            }
+        }
+    };
+
+    fetchMessages();
+}, [blog?.author?._id, id, activeTab]);
+
+// // Update socket message handler as well
+// useEffect(() => {
+//     const newSocket = io(SOCKET_URL);
+//     setSocket(newSocket);
+
+//     if (blog?.author?._id) {
+//         newSocket.emit('join', {
+//             userId: localStorage.getItem('userId'),
+//             authorId: blog.author._id,
+//             blogId: id
+//         });
+//     }
+
+//     newSocket.on('receive_message', (message) => {
+//         // Check if message is from blog author or matches blog ID
+//         const isFromAuthor = message.userId === blog.author._id || message.userId === blog._id;
+        
+//         setMessages(prev => [...prev, {
+//             text: message.text,
+//             sender: isFromAuthor ? 'author' : 'user'
+//         }]);
+//     });
+
+//     return () => {
+//         newSocket.disconnect();
+//     };
+// }, [blog?.author?._id, id]);
+                
+               
 
   const toggleDarkMode = () => {
     const newMode = !darkMode;
@@ -459,7 +204,7 @@ export default function ViewDetails() {
       : "bg-gradient-to-t from-emerald-700 to-emerald-50 text-gray-800"
       }`}>
 
-      <div className="relative h-68 w-full overflow-hidden">
+      <div className="relative h-92 w-full overflow-hidden">
         {blog.images && blog.images.length > 0 ? (
           <img
             src={`http://localhost:5000/${blog.images[0]}`}
@@ -594,6 +339,23 @@ export default function ViewDetails() {
                 Weather
               </button>
             )}
+            {blog.author && blog.author._id !== localStorage.getItem('userId') ? (
+                  <button
+                      onClick={() => setActiveTab("chat")}
+                      className={`px-6 py-3 m-1 rounded-lg text-sm text-md md:text-lg font-bold whitespace-nowrap transition-colors flex items-center gap-2 ${
+                          activeTab === "chat"
+                              ? "text-white bg-emerald-600"
+                              : "hover:text-emerald-500"
+                      }`}
+                  >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
+                              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z">
+                          </path>
+                      </svg>
+                      Message Author
+                  </button>
+              ) : null}
             </div>
         </div>
         {/* Tab Content */}
@@ -906,11 +668,116 @@ export default function ViewDetails() {
                   </p>
                 </div>
               </div>
-            </div>
+              
+            </div> 
           )}
+          {activeTab === "chat" && blog?.author?._id && blog.author._id !== localStorage.getItem('userId') && (
+              <div className={`p-6 rounded-xl shadow-lg ${darkMode ? "bg-gray-800" : "bg-white"}`}>
+                <div className="max-w-2xl mx-auto">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
+                      <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
+                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold">Chat with {blog.author.name}</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        Ask about their travel experience
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-gray-100 dark:bg-gray-700 rounded-lg mb-4 h-96 overflow-y-auto p-4">
+                    {messages.length === 0 ? (
+                      <div className="h-full flex items-center justify-center">
+                        <p className="text-center text-gray-600 dark:text-gray-400">
+                          Start a conversation with {blog.author.name}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {messages.map((msg, index) => (
+                          <div
+                            key={index}
+                            className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                          >
+                            <div className="flex flex-col">
+                              <div className={`max-w-[80%] rounded-lg px-4 py-2 ${
+                                msg.sender === 'user' 
+                                  ? 'bg-emerald-500 text-white' 
+                                  : 'bg-gray-200 dark:bg-gray-500'
+                              }`}>
+                                <p>{msg.text}</p>
+                              </div>
+                              <span className={`text-xs mt-1 ${
+                                msg.sender === 'user' 
+                                  ? 'text-right text-gray-500 dark:text-gray-400' 
+                                  : 'text-left text-gray-500 dark:text-gray-400'
+                              }`}>
+                                {msg.sender === 'user' ? 'You' : `${blog.author.name} (Author)`}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={newMessage}
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      placeholder="Type your message..."
+                      className={`flex-1 px-4 py-2 rounded-lg ${
+                        darkMode 
+                          ? 'bg-gray-700 text-gray-100' 
+                          : 'bg-gray-100 text-gray-900'
+                      } focus:outline-none focus:ring-2 focus:ring-emerald-500`}
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter' && newMessage.trim() && socket) {
+                          const messageData = {
+                            text: newMessage,
+                            userId: localStorage.getItem('userId'),
+                            authorId: blog.author._id,
+                            blogId: id
+                          };
+                          socket.emit('send_message', messageData);
+                          // setMessages(prev => [...prev, { text: newMessage, sender: 'user' }]);
+                          setNewMessage('');
+                        }
+                      }}
+                    />
+                    <button
+                      onClick={() => {
+                        if (newMessage.trim() && socket) {
+                          const messageData = {
+                            text: newMessage,
+                            userId: localStorage.getItem('userId'),
+                            authorId: blog.author._id,
+                            blogId: id
+                          };
+                          socket.emit('send_message', messageData);
+                          // setMessages(prev => [...prev, { text: newMessage, sender: 'user' }]);
+                          setNewMessage('');
+                        }
+                      }}
+                      className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
         </div>
 
       </div>
     </div>
   );
 }
+

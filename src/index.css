@@ -1,4 +1,44 @@
 @import "tailwindcss";
-body{
-    font-family: "Nunito","Poppins",sans-serif;
+
+body {
+    font-family: "Poppins", sans-serif;
 }
+
+.lobster-regular {
+    font-family: "Lobster", sans-serif;
+    font-style: normal;
+}
+
+
+
+.merienda {
+    font-family: "Merienda", cursive;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.meriendass {
+    font-family: "Merienda", cursive;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+}
+
+
+.typing-animation {
+    animation: typing 4s steps(50, end) infinite alternate, blink 0.7s step-end infinite;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid white;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  
+  @keyframes blink {
+    0%, 100% { border-color: transparent }
+    50% { border-color: white }
+  }

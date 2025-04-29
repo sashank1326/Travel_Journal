@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Socket.io Test</title>
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Socket.io Connection Test</h1>
+    <div id="status">Connecting...</div>
+
+    <script>
+        const socket = io('http://localhost:5000');
+        
+        socket.on('connect', () => {
+            document.getElementById('status').innerHTML = 
+                `Connected ✅<br>Socket ID: ${socket.id}`;
+            console.log('Connected to server!');
+        });
+
+        socket.on('connect_error', (error) => {
+            document.getElementById('status').innerHTML = 
+                `Connection Error ❌<br>${error.message}`;
+            console.error('Connection failed:', error);
+        });
+    </script>
+</body>
+</html>
