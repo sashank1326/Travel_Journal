@@ -235,7 +235,7 @@ export default function Dashboard() {
       setIsLoading(true);
       const token = localStorage.getItem("token");
       if (!token) {
-        navigate("/signin");
+        navigate("/");
         return;
       }
 
@@ -247,7 +247,7 @@ export default function Dashboard() {
         setEmail(userData.email || "Not Provided");
       } catch (error) {
         console.error("Error fetching user details:", error.message);
-        navigate("/signin");
+        navigate("/");
       } finally {
         setIsLoading(false);
       }

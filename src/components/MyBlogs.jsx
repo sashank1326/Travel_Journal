@@ -233,7 +233,7 @@ export default function MyBlogs() {
     const fetchUser = async () => {
       const token = localStorage.getItem("token");
       if (!token) {
-        navigate("/signin");
+        navigate("/");
         return;
       }
 
